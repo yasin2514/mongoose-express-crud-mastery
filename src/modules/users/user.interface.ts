@@ -36,5 +36,5 @@ export type TUser = {
 
 // create custom static method---------
 export interface TUserModel extends Model<TUser> {
-  isUserExists(id: string): Promise<TUser | null>;
+  isUserExists(userId: number): Promise<TUser | null>;
 }

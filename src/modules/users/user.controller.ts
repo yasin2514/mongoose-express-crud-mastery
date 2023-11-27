@@ -6,7 +6,6 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const userData = req.body;
     const zodParseData = UserSchemaValidation.parse(userData);
-
     const result = await UserServices.createUserIntoDB(zodParseData);
     res.status(200).json({
       success: true,
@@ -16,7 +15,7 @@ const createUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: '',
+      message: 'Something Went to Wrong',
       error: {
         code: 500,
         description: error.message,

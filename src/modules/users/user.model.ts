@@ -77,5 +77,9 @@ const userSchema = new Schema<TUser, TUserModel>({
   orders: [ordersSchema],
 });
 
+// create custom static model---
+userSchema.statics.isUserExists = async function (userId: number) {
+  return await UserModel.findOne({ userId });
+};
 // create model--------------------
 export const UserModel = model<TUser, TUserModel>('User', userSchema);
