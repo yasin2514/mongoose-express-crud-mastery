@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { TUser } from './user.interface';
 
 // Define sub-schemas
 const UserNameSchema = z.object({
@@ -22,7 +23,10 @@ const OrdersSchema = z.object({
 export const UserSchema = z.object({
   userId: z.number().positive('User Id must be greater than 0'),
   username: z.string(),
-  password: z.string().max(20, 'Password Is Smaller than 20 character'),
+  password: z
+    .string()
+    .max(20, 'Password should be maximum 20 character')
+    .min(6, 'Password should be is Minimum 6 character'),
   fullName: UserNameSchema,
   age: z.number().positive('Age must be greater than 0'),
   email: z.string().email('Invalid email format'),
