@@ -1,37 +1,36 @@
 import { z } from 'zod';
-import { TUser } from './user.interface';
 
 // Define sub-schemas
-const UserNameSchema = z.object({
-  firstName: z.string().nonempty('First Name is Required'),
-  lastName: z.string().nonempty('Last Name is Required'),
+const UserNameSchemaValidation = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
 });
 
-const AddressSchema = z.object({
-  street: z.string().nonempty('Street is Required'),
-  city: z.string().nonempty('City is Required'),
-  country: z.string().nonempty('Country is Required'),
+const AddressSchemaValidation = z.object({
+  street: z.string(),
+  city: z.string(),
+  country: z.string(),
 });
 
-const OrdersSchema = z.object({
-  productName: z.string().nonempty('Product Name is Required'),
+const OrdersSchemaValidation = z.object({
+  productName: z.string(),
   price: z.number().positive('Price must be greater than 0'),
   quantity: z.number().positive('Quantity must be greater than 0'),
 });
 
 // Define main schema
-export const UserSchema = z.object({
+export const UserSchemaValidation = z.object({
   userId: z.number().positive('User Id must be greater than 0'),
   username: z.string(),
   password: z
     .string()
     .max(20, 'Password should be maximum 20 character')
     .min(6, 'Password should be is Minimum 6 character'),
-  fullName: UserNameSchema,
+  fullName: UserNameSchemaValidation,
   age: z.number().positive('Age must be greater than 0'),
   email: z.string().email('Invalid email format'),
   isActive: z.boolean().default(true),
   hobbies: z.array(z.string()),
-  address: AddressSchema,
-  orders: z.array(OrdersSchema),
+  address: AddressSchemaValidation,
+  orders: z.array(OrdersSchemaValidation),
 });
