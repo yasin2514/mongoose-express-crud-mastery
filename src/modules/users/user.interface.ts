@@ -1,4 +1,6 @@
 // ------------------------sub interface----------------------------
+export type TGenericArray<T> = Array<T>;
+
 export type TUserName = {
   firstName: string;
   lastName: string;
@@ -25,6 +27,7 @@ export type TUser = {
   age: number;
   email: string;
   isActive: boolean;
+  hobbies: TGenericArray<string>;
   address: TAddress;
-  orders: TOrders;
+  orders?: TGenericArray<TOrders>;
 };
