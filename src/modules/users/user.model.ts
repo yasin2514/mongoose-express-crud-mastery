@@ -77,6 +77,10 @@ const userSchema = new Schema<TUser, TUserModel>({
   hobbies: [String],
   address: addressSchema,
   orders: [ordersSchema],
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // hash password
@@ -94,7 +98,24 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
+// query middleware---------------------
+// pre save
+userSchema.pre('find', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
 
+// pre save
+userSchema.pre('findOne', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+// aggregate middleware---------------------
+userSchema.pre('aggregate', async function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
 
 // create custom static model---
 userSchema.statics.isUserExists = async function (userId: number) {

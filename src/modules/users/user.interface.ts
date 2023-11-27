@@ -32,6 +32,7 @@ export type TUser = {
   hobbies: TGenericArray<string>;
   address: TAddress;
   orders?: TGenericArray<TOrders>;
+  isDeleted: boolean;
 };
 
 // create custom static method---------

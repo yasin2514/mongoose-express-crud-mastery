@@ -33,4 +33,5 @@ export const UserSchemaValidation = z.object({
   hobbies: z.array(z.string()),
   address: AddressSchemaValidation,
   orders: z.array(OrdersSchemaValidation).optional(),
+  isDeleted: z.boolean().default(false),
 });
