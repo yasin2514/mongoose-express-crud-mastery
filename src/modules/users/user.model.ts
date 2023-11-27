@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { TUser, TUserModel } from './user.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 // sub schemas
 const userNameSchema = new Schema({
   firstName: {
@@ -76,6 +78,23 @@ const userSchema = new Schema<TUser, TUserModel>({
   address: addressSchema,
   orders: [ordersSchema],
 });
+
+// hash password
+userSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
+
+// pose save middleware/ hook
+userSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
+
+
 
 // create custom static model---
 userSchema.statics.isUserExists = async function (userId: number) {
