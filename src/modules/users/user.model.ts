@@ -113,7 +113,9 @@ userSchema.pre('findOne', async function (next) {
 
 // aggregate middleware---------------------
 userSchema.pre('aggregate', async function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  this.pipeline().unshift({
+    $match: { isDeleted: { $ne: true } },
+  });
   next();
 });
 

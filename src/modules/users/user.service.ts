@@ -15,7 +15,22 @@ const getAllUsersFromDB = async () => {
   return result;
 };
 
+//get single student data---------
+const getSingleUserFromDB = async (userId: number) => {
+  // using aggregation-------
+  const result = await UserModel.aggregate([{ $match: { userId: userId } }]);
+  return result;
+};
+
+// delete student from DB----
+const deleteUserFromDB = async (userId: number) => {
+  const result = await UserModel.updateOne({ userId }, { isDeleted: true });
+  return result;
+};
+
 export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
+  getSingleUserFromDB,
+  deleteUserFromDB,
 };

@@ -45,7 +45,47 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+// get single user from DB,
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await UserServices.getSingleUserFromDB(parseInt(userId));
+    res.status(200).json({
+      success: true,
+      message: 'Users is retrieved successfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'Something Went to Wrong',
+      error: err,
+    });
+  }
+};
+
+// delete student
+const deleteSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await UserServices.deleteUserFromDB(parseInt(userId));
+    res.status(200).json({
+      success: true,
+      message: 'Users is delete successfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'Something Went to Wrong',
+      error: err,
+    });
+  }
+};
+
 export const UserController = {
   createUser,
   getAllUsers,
+  getSingleUser,
+  deleteSingleUser,
 };
