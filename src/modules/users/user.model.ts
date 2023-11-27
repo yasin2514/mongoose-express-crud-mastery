@@ -1,4 +1,5 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { TUser, TUserModel } from './user.interface';
 // sub schemas
 const userNameSchema = new Schema({
   firstName: {
@@ -42,13 +43,13 @@ const ordersSchema = new Schema({
 });
 
 // main schema
-const userSchema = new Schema({
+const userSchema = new Schema<TUser, TUserModel>({
   userId: {
     type: Number,
     required: [true, 'User Id is Required'],
     unique: true,
   },
-  userName: {
+  username: {
     type: String,
     required: [true, 'User Name is Required'],
     unique: true,
@@ -75,3 +76,6 @@ const userSchema = new Schema({
   address: addressSchema,
   orders: [ordersSchema],
 });
+
+// create model--------------------
+export const UserModel = model<TUser, TUserModel>('User', userSchema);

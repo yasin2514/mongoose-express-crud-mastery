@@ -1,3 +1,5 @@
+import { Model } from 'mongoose';
+
 // ------------------------sub interface----------------------------
 export type TGenericArray<T> = Array<T>;
 
@@ -31,3 +33,8 @@ export type TUser = {
   address: TAddress;
   orders?: TGenericArray<TOrders>;
 };
+
+// create custom static method---------
+export interface TUserModel extends Model<TUser> {
+  isUserExists(id: string): Promise<TUser | null>;
+}
